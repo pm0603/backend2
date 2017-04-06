@@ -9,21 +9,35 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import json
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+DEBUG = True
+
+# 기본 디렉토리 설정 - 최영민
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
+CONF_DIR = os.path.join(ROOT_DIR, '.conf-secret')
+CONFIG_FILE_COMMON = os.path.join(CONF_DIR, 'settings_common.json')
+if DEBUG:
+    CONFIG_FILE = os.path.join(CONF_DIR, 'settings_local.json')
+else:
+    CONFIG_FILE = os.path.join(CONF_DIR, 'settings_deploy.json')
+config_common = json.loads(open(CONFIG_FILE_COMMON).read())
+config = json.loads(open(CONFIG_FILE).read())
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+# common과 현재 사용설정(local or deploy)를 합쳐줌 - 최영민
+for key, key_dict in config_common.items():
+    if not config.get(key):
+        config[key] = {}
+    for inner_key, inner_key_dict in key_dict.items():
+        config[key][inner_key] = inner_key_dict
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hb@$(-83_59hs1)a*vcct$=cqs1aw(%ap712l@zj9$4bgni4_b'
+SECRET_KEY = config['django']['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -103,9 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
