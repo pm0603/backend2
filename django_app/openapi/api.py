@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from config.settings import config
-from openapi.models import Content
+from .models import Performance
 
 decode_key = unquote(config['API']['API_key'])
 global_url = 'http://www.culture.go.kr/openapi/rest/publicperformancedisplays/'
@@ -35,7 +35,7 @@ def detail_get(seq):
     place_addr = item_path['placeAddr']
     place_seq = item_path['placeSeq']
 
-    Content.objects.filter(seq=seq).update(
+    Performance.objects.filter(seq=seq).update(
         ticket_url=ticket_url,
         phone=phone,
         price=price,
@@ -70,7 +70,7 @@ def xml_parser_db_save(request):
         gps_x = item_path_index['gpsX']
         gps_y = item_path_index['gpsY']
 
-        Content.objects.get_or_create(
+        Performance.objects.get_or_create(
             seq=seq,
             title=title,
             place=place,
