@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import json
 import os
 
-DEBUG = True
+# 환경 변수 값 - 최영민
+DEBUG = os.environ.get('MODE') == 'DEBUG'
+STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
+DB_RDS = os.environ.get('DB') == 'RDS' or DEBUG is False
 
 # 기본 디렉토리 설정 - 최영민
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,7 +39,9 @@ for key, key_dict in config_common.items():
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['django']['secret_key']
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# S3 관련 설정 - 최영민
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 ALLOWED_HOSTS = []
@@ -51,6 +56,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # S3를 쓰기 위한 앱 - 최영민
+    'storages',
 ]
 
 MIDDLEWARE = [
