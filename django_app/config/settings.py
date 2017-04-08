@@ -40,7 +40,6 @@ else:
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
 
-
 # common과 현재 사용설정(local or deploy)를 합쳐줌 - 최영민
 for key, key_dict in config_common.items():
     if not config.get(key):
@@ -66,9 +65,7 @@ STATICFILES_LOCATION = 'static'
 # https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-013847878072/admin/css/base.css
 STATIC_URL = "https://%s/%s/" % (AWS_S3_HOST, config['aws']['s3_storage_bucket_name'])
 
-
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -140,28 +137,25 @@ CORS_ORIGIN_WHITELIST = (
 
 # DB관련 설정 - 최영민
 
-if DB_RDS or DEBUG is False:
-    db_config = config['db_rds']
-    DATABASES = {
-        'default': {
-            'ENGINE': db_config['engine'],
-            'NAME': db_config['name'],
-            'USER': db_config['user'],
-            'PASSWORD': db_config['password'],
-            'HOST': db_config['host'],
-            'PORT': db_config['port'],
-        }
+# if DB_RDS or DEBUG is False:
+#     db_config = config['db_rds']
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': db_config['engine'],
+#             'NAME': db_config['name'],
+#             'USER': db_config['user'],
+#             'PASSWORD': db_config['password'],
+#             'HOST': db_config['host'],
+#             'PORT': db_config['port'],
+#         }
+#     }
+# else:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-
-
-# Password validation
+}  # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = 'member.MyUser'
@@ -180,7 +174,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -193,7 +186,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
