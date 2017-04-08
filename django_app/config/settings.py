@@ -29,6 +29,7 @@ else:
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
 
+
 # common과 현재 사용설정(local or deploy)를 합쳐줌 - 최영민
 for key, key_dict in config_common.items():
     if not config.get(key):
@@ -106,14 +107,29 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# DB관련 설정 - 최영민
+
+if DB_RDS or DEBUG is False:
+    db_config = config['db_rds']
+    DATABASES = {
+        'default': {
+            'ENGINE': db_config['engine'],
+            'NAME': db_config['name'],
+            'USER': db_config['user'],
+            'PASSWORD': db_config['password'],
+            'HOST': db_config['host'],
+            'PORT': db_config['port'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
-
+print(config['db_rds'])
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
