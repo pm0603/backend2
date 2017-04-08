@@ -39,12 +39,23 @@ for key, key_dict in config_common.items():
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['django']['secret_key']
 
+# AWS 관련 설정(django-storages) - 최영민
+AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
+AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
+AWS_STORAGE_BUCKET_NAME = config['aws']['s3_storage_bucket_name']
+AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
+AWS_S3_HOST = 's3.{}.amazonaws.com'.format(config['aws']['s3_region'])
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+
 # S3 관련 설정 - 최영민
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_LOCATION = 'static'
+# https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-013847878072/admin/css/base.css
+STATIC_URL = "https://%s/%s/" % (AWS_S3_HOST, config['aws']['s3_storage_bucket_name'])
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -138,5 +149,3 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_URL = '/static/'
