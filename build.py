@@ -79,7 +79,7 @@ elif args.mode == MODE_PRODUCTION:
     imagename = IMAGE_PRODUCTION
 elif args.mode == MODE_DOCKERHUB:
     dockerfile = dockerfile_template.format(
-        from_image='azelf/front',
+        from_image='archoiym/front',
         maintainer=MAINTAINER,
         base='',
         extra=dockerfile_extra_dockerhub,
