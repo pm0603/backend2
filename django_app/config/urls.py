@@ -20,6 +20,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include("member.urls")),
     # open api 확인용 url
-    url(r'^api/', include('openapi.urls')),
+    url(r'^api/', include('content_api.urls')),
 
 ]

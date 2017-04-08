@@ -12,7 +12,7 @@ class Content(models.Model):
     place = models.CharField(max_length=100, null=True)
     realm_name = models.CharField(max_length=50, null=True)
     area = models.CharField(max_length=10, null=True)
-    price = models.models.TextField()
+    price = models.TextField()
     content = models.TextField()
     ticket_url = models.CharField(max_length=100, null=True)
     phone = models.CharField(max_length=50, null=True)

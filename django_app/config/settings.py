@@ -87,6 +87,9 @@ INSTALLED_APPS = [
 
     # CORS설정 - 최영민
     'corsheaders',
+
+    # Content api - 김도경
+    'content_api',
 ]
 
 MIDDLEWARE = [
