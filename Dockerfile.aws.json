@@ -16,7 +16,7 @@
       "portMappings": [
         {
           "hostPort": 80,
-          "containerPort": 4040
+          "containerPort": 4567
         }
       ]
     }

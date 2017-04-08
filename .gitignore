@@ -1,5 +1,7 @@
 # Created by https://www.gitignore.io/api/django,python,pycharm
 
+# Front 
+front*
 
 ### Docker 
 _Dockerfile*
