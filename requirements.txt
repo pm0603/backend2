@@ -5,6 +5,9 @@ botocore==1.5.37
 cement==2.8.2
 colorama==0.3.7
 Django==1.11
+djangorestframework==3.6.2
+passlib==1.7.1
+requests==2.13.0
 django-storages==1.5.2
 docker-py==1.7.2
 dockerpty==0.4.1
@@ -16,7 +19,6 @@ psycopg2==2.7.1
 python-dateutil==2.6.0
 pytz==2017.2
 PyYAML==3.12
-requests==2.9.1
 s3transfer==0.1.10
 semantic-version==2.5.0
 six==1.10.0
