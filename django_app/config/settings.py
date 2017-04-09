@@ -40,7 +40,6 @@ else:
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
 
-
 # common과 현재 사용설정(local or deploy)를 합쳐줌 - 최영민
 for key, key_dict in config_common.items():
     if not config.get(key):
@@ -66,9 +65,7 @@ STATICFILES_LOCATION = 'static'
 # https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-013847878072/admin/css/base.css
 STATIC_URL = "https://%s/%s/" % (AWS_S3_HOST, config['aws']['s3_storage_bucket_name'])
 
-
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -90,6 +87,9 @@ INSTALLED_APPS = [
 
     # CORS설정 - 최영민
     'corsheaders',
+
+    # Content api - 김도경
+    'content_api',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +134,11 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:9000'
 )
 
+# REST 설정 : pagination - 김도경
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 6
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -158,10 +163,7 @@ else:
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
-    }
-
-
-# Password validation
+    }  # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = 'member.MyUser'
@@ -180,7 +182,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -193,7 +194,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
