@@ -17,8 +17,7 @@ class SnippetViewSet(viewsets.ModelViewSet):
 class DetailViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
-    filter_backends = (filters.OrderingFilter, filters.SearchFilter)
-    ordering = ('-start_date',)
+    filter_backends = (filters.SearchFilter, )
     search_fields = ('seq', 'title')
 
 
