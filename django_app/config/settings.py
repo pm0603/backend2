@@ -157,13 +157,18 @@ if DB_RDS or DEBUG is False:
             'PORT': db_config['port'],
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }  # Password validation  # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
+
+# 로컬에서도 AWS RDS작동여부를 확인하고 에러 시 DEBUG를 확인하기 위해 주석처리 (최영민)
+
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         }
+#     }
+# Password validation
+# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = 'member.MyUser'
 AUTH_PASSWORD_VALIDATORS = [
