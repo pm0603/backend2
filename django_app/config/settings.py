@@ -136,7 +136,7 @@ CORS_ORIGIN_WHITELIST = (
 
 # REST 설정 : pagination - 김도경
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
     'PAGE_SIZE': 6
 }
 
