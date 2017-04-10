@@ -1,7 +1,4 @@
-from django.conf import settings
 from django.db import models
-
-from config import settings
 
 
 class Content(models.Model):
@@ -22,18 +19,19 @@ class Content(models.Model):
     place_url = models.CharField(max_length=200, null=True)
     place_addr = models.CharField(max_length=100, null=True)
     place_seq = models.CharField(max_length=10, null=True)
-    comment = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 
+    # Comment는 추후에 구현 (최영민)
+    # comment = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 
-class PostComment(models.Model):
-    post = models.ForeignKey(Content)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    content = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '{} comment (author:{}) \n {}'.format(
-            self.post_id,
-            self.author_id,
-            self.content
-        )
+# class PostComment(models.Model):
+#     post = models.ForeignKey(Content)
+#     author = models.ForeignKey(settings.AUTH_USER_MODEL)
+#     content = models.TextField()
+#     created_date = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return '{} comment (author:{}) \n {}'.format(
+#             self.post_id,
+#             self.author_id,
+#             self.content
+#         )
