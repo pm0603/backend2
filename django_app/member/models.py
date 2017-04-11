@@ -16,9 +16,10 @@ class UserManager(BaseUserManager):
         send_auth_mail.send_activation_mail(user_email=user.email,
                                             hashed_email=hashed_email)
 
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, username, password, **extra_fields):
         user = MyUser(
             email=email,
+            username=username,
             **extra_fields)
         user.set_password(password)
         user.save()
@@ -27,9 +28,10 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def _create_user(self, email, password, **extra_fields):
+    def _create_user(self, email, username, password, **extra_fields):
         user = MyUser(
             email=email,
+            username=username,
             **extra_fields)
         user.set_password(password)
         user.is_staff = True
@@ -39,13 +41,14 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, email, username, password, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(email, username, password, **extra_fields)
 
-    def create_facebook_user(self, email, facebook_id, password=None):
+    def create_facebook_user(self, email, username, facebook_id, password=None):
         user = MyUser(
             email=email,
+            username=username,
             facebook_id=facebook_id)
         user.is_facebook = True
         user.is_active = True
@@ -56,6 +59,7 @@ class UserManager(BaseUserManager):
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
+    username = models.CharField(max_length=50)
     joined_date = models.DateTimeField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -64,6 +68,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ("username",)
 
     objects = UserManager()
 
@@ -71,10 +76,10 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def get_full_name(self):
-        return self.email
+        return self.username
 
     def get_short_name(self):
-        return self.email
+        return self.username
 
 
 class UserHash(models.Model):
