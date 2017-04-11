@@ -1,5 +1,8 @@
-FROM        {from_image}
+FROM        {from}
 MAINTAINER  {maintainer}
 
-{base}
+{base_apt}
+{base_pip}
+{base_npm}
+{common}
 {extra}
