@@ -1,6 +1,9 @@
 
 # Created by https://www.gitignore.io/api/django,python,pycharm
 
+# EB
+.ebextensions
+
 # Front 
 front*
 
