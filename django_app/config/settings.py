@@ -135,17 +135,19 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 # REST 설정 : pagination - 김도경
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
-    'PAGE_SIZE': 6
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+# }
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
+    # 'PAGE_SIZE': 6
+
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 # DB관련 설정 - 최영민
 
-if DB_RDS or DEBUG is False:
+if DB_RDS and DEBUG is False:
     db_config = config['db_rds']
     DATABASES = {
         'default': {
