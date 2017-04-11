@@ -9,7 +9,7 @@ class SnippetViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
-    ordering = ('-start_date',)
+    ordering = ('-start_date', '-id')
     search_fields = ('seq', 'title', 'start_date', 'end_date', 'place', 'realm_name',
                      'area', 'price', 'phone')
 
@@ -25,7 +25,7 @@ class AreaViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
-    ordering = ('-start_date',)
+    ordering = ('-start_date', '-id')
     search_fields = ('area', 'area')
 
 
@@ -33,5 +33,5 @@ class GenreViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
-    ordering = ('-start_date',)
+    ordering = ('-start_date', '-id')
     search_fields = ('realm_name', 'realm_name')
