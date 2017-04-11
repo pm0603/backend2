@@ -40,7 +40,6 @@ else:
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
 
-
 # common과 현재 사용설정(local or deploy)를 합쳐줌 - 최영민
 for key, key_dict in config_common.items():
     if not config.get(key):
@@ -66,9 +65,7 @@ STATICFILES_LOCATION = 'static'
 # https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-013847878072/admin/css/base.css
 STATIC_URL = "https://%s/%s/" % (AWS_S3_HOST, config['aws']['s3_storage_bucket_name'])
 
-
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -87,11 +84,22 @@ INSTALLED_APPS = [
 
     # S3를 쓰기 위한 앱 - 최영민
     'storages',
+
+    # CORS설정 - 최영민
+    'corsheaders',
+
+    # Content api - 김도경
+    'content_api',
 ]
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    # CORS 설정 - 최영민
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -119,6 +127,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# CORS 설정 - 최영민
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8080',
+    'localhost:8000',
+    '127.0.0.1:9000'
+)
+
+# REST 설정 : pagination - 김도경
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
+    'PAGE_SIZE': 6
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -137,6 +157,8 @@ if DB_RDS or DEBUG is False:
             'PORT': db_config['port'],
         }
     }
+# 로컬에서도 AWS RDS작동여부를 확인하고 에러 시 DEBUG를 확인하기 위해 주석처리 (최영민)
+
 else:
     DATABASES = {
         'default': {
@@ -144,10 +166,6 @@ else:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = 'member.MyUser'
 AUTH_PASSWORD_VALIDATORS = [
@@ -165,7 +183,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -178,7 +195,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

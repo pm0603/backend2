@@ -9,7 +9,7 @@ __all__ = [
 
 def send_activation_mail(user_email, hashed_email):
     hashed_email = hashed_email.replace("$pbkdf2-sha512$8000$", "")
-    activate_url = "http://127.0.0.1:8000/user/activate/{hashed_email}/".format(hashed_email=hashed_email)
+    activate_url = "http://pm0603-dev.ap-northeast-2.elasticbeanstalk.com/user/activate/{hashed_email}/".format(hashed_email=hashed_email)
     send_mail(
         "pm0603 Signup mail",
         """
