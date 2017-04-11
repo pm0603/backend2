@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from config.settings import config
-from content_api.models import Content
+from .models import Content
 
 decode_key = unquote(config['API']['API_key'])
 global_url = 'http://www.culture.go.kr/openapi/rest/publicperformancedisplays/'
@@ -89,11 +89,11 @@ def xml_parser_db_save(request):
 # 지역을 검색시 동작
 class Area(APIView):
     def get(self, request):
-        keyword = request.GET.get('keyword')
+        search = request.GET.get('search')
         rows = request.GET.get('rows', default=10)
         url = global_url + 'area'
         queryParams = '?' + urlencode({quote_plus('ServiceKey'): decode_key,
-                                       quote_plus('sido'): keyword,
+                                       quote_plus('sido'): search,
                                        quote_plus('gugun'): '',
                                        quote_plus('rows'): rows})
         """
@@ -108,7 +108,8 @@ class Area(APIView):
 # 분야별로 검색시 동작
 class Genre(APIView):
     def get(self, request):
-        code = request.GET.get('code')
+        code = request.GET.get('search')
+        print(code)
         rows = request.GET.get('rows', default=10)
         url = global_url + 'realm'
         queryParams = '?' + urlencode({quote_plus('ServiceKey'): decode_key,
