@@ -1,9 +1,9 @@
 {
-    "imageNameBaseApt": "api-ios-base-apt",
-    "imageNameBasePip": "api-ios-base-pip",
-    "imageNameBaseNpm": "api-ios-base-npm",
+    "imageNameBaseApt": "pm0603-base-apt",
+    "imageNameBasePip": "pm0603-base-pip",
+    "imageNameBaseNpm": "pm0603-base-npm",
     "imageNameDebug": "api-ios-debug",
-    "imageNameProduction": "production",
+    "imageNameProduction": "pm0603-production",
     "imageNameRoot": "ubuntu:16.04",
     "imageNameDockerHub": "production-dockerhub",
     "dockerfileBaseNameApt": "Dockerfile.base.1.apt",

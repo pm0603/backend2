@@ -9,3 +9,6 @@ RUN         apt-get -y update && \
             apt-get -y install libssl-dev && \
             curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
             apt-get -y install nodejs
+
+WORKDIR     /srv
+RUN         pip3 install uwsgi
