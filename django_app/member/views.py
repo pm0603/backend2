@@ -4,13 +4,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from config import settings
 from member.forms import UserForm, UserSignupForm
 from member.models import MyUser, UserHash
+from member.serializers import PasswordChangeSerializer
 
 
 class Login(APIView):
@@ -111,3 +112,25 @@ class UserActivate(APIView):
         active_ready_user.user.is_active = True
         active_ready_user.user.save()
         return Response({"info": "계정이 활성화 되었습니다."}, status=status.HTTP_200_OK)
+
+
+class PasswordChange(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PasswordChangeSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.POST)
+
+        if serializer.is_valid():
+            user = request.user
+
+            password = serializer.data['password']
+            user.set_password(password)
+            user.save()
+
+            content = {'success': 'Password changed.'}
+            return Response(content, status=status.HTTP_200_OK)
+
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)

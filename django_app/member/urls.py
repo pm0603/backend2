@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^logout/$', views.Logout.as_view()),
     url(r'^fblogin/$', views.FacebookLogin.as_view()),
     url(r'^activate/(?P<hash>.*)/$', views.UserActivate.as_view()),
-
+    url(r'^password/change/$', views.PasswordChange.as_view()),
 ]
