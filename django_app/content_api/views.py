@@ -12,7 +12,11 @@ class DefaultResultsSetPagination(PageNumberPagination):
 # Content DB 정보 API
 class ContentViewSet(generics.ListAPIView):
     queryset = Content.objects.all()
-    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter,)
+    filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend, filters.OrderingFilter,)
+
+    # search 대상(통합검색)
+    search_fields = ('seq', 'title', 'start_date', 'end_date', 'place', 'realm_name',
+                     'area', 'price', 'content',)
 
     # 필터링 조건 (카테고리)
     filter_fields = ('seq', 'area', 'realm_name')
@@ -27,7 +31,7 @@ class ContentViewSet(generics.ListAPIView):
     def get_serializer_class(self):
         if self.request.query_params.get('seq'):
             return ContentDetailSerializer
-        elif self.request.query_params.get('realm_name'):
+        else:
             return ContentSimpleSerializer
-        elif self.request.query_params.get('area'):
-            return ContentSimpleSerializer
+
+
