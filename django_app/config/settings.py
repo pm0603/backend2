@@ -139,6 +139,7 @@ CORS_ORIGIN_WHITELIST = (
 
 # DB관련 설정 - 최영민
 
+
 if DB_RDS and DEBUG is False:
     db_config = config['db_rds']
     DATABASES = {
@@ -150,7 +151,7 @@ if DB_RDS and DEBUG is False:
             'HOST': db_config['host'],
             'PORT': db_config['port'],
         }
-    }
+}
 # 로컬에서도 AWS RDS작동여부를 확인하고 에러 시 DEBUG를 확인하기 위해 주석처리 (최영민)
 
 else:
