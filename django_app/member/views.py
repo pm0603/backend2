@@ -51,6 +51,7 @@ class SignUp(APIView):
             try:
                 MyUser.objects.create_user(
                     email=form.cleaned_data["email"],
+                    username=form.cleaned_data["username"],
                     password=form.cleaned_data["password"],
                 )
             except IntegrityError as e:
@@ -78,7 +79,8 @@ class FacebookLogin(APIView):
             except MyUser.DoesNotExist:
                 user_info = self.get_user_info(user_id, access_token)
                 facebook_user = MyUser.objects.create_facebook_user(facebook_id=user_id,
-                                                                    email=user_info['email'])
+                                                                    email=user_info['email'],
+                                                                    username=user_info['name'])
             token = Token.objects.get_or_create(user=facebook_user)[0]
             ret = {"token": token.key}
             return Response(ret, status=status.HTTP_200_OK)
@@ -88,7 +90,7 @@ class FacebookLogin(APIView):
     def get_user_info(self, user_id, access_token):
         url_request_user_info = 'https://graph.facebook.com/' \
                                 '{user_id}?' \
-                                'fields=email&' \
+                                'fields=email,name&' \
                                 'access_token={access_token}'.format(
             user_id=user_id,
             access_token=access_token
