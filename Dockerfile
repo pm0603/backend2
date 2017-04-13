@@ -20,7 +20,8 @@ MAINTAINER  archoiym@gmail.com
 #            apt-get -y install libssl-dev && \
 #            curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
 #            apt-get -y install nodejs
-#
+
+# pip패키지가 변한 경우
 #WORKDIR     /srv/app
 #RUN         pip3 install -r requirements.txt && \
 #            pip3 install uwsgi
@@ -41,9 +42,6 @@ MAINTAINER  archoiym@gmail.com
 #RUN         ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 
 # 기본 실행 부분 (배포용)
-WORKDIR     /srv
-RUN         pip3 install -r requirements.txt
-COPY        . /srv/app
 WORKDIR     /srv/app/django_app
 EXPOSE      4567
 CMD ["supervisord", "-n"]

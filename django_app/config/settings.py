@@ -132,8 +132,16 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
     'localhost:8000',
     'front.localhost:8000',
-    'front.localhost:4567',
+    'front.localhost:8000/*',
     'front.pm0603.com',
+    'pm0603.com',
+    'www.pm0603.com',
+    'front.localhost/*',
+    'pm0603.com/*',
+    'www.pm0603.com',
+    '*',
+    'api.pm0603.com',
+    'api.pm0603.com/*',
 )
 
 # Database
