@@ -42,6 +42,7 @@ MAINTAINER  archoiym@gmail.com
 #RUN         ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 
 # 기본 실행 부분 (배포용)
+
 WORKDIR     /srv/app/django_app
 EXPOSE      4567
 CMD ["supervisord", "-n"]

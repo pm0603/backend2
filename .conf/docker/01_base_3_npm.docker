@@ -1,2 +1,2 @@
 WORKDIR     /srv
-RUN         git clone https://github.com/pm0603/frontend-vue.git front
+RUN         git clone https://github.com/pm0603/frontend-vue.git frontend
