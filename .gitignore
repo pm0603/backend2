@@ -1,6 +1,9 @@
 
 # Created by https://www.gitignore.io/api/django,python,pycharm
 
+# Docker 테스트 관련 
+prog.py
+
 # Front 
 front*
 

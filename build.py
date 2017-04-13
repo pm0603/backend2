@@ -204,6 +204,7 @@ elif args.mode == MODE_PRODUCTION:
     format_dict['base_apt'] = ''
     format_dict['base_pip'] = ''
     format_dict['base_npm'] = ''
+    format_dict['common'] = dockerfile_common
     format_dict['extra'] = dockerfile_extra_production
 else:
     dockerfile_name = config['dockerfileDockerHubName']
