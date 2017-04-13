@@ -131,7 +131,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
     'localhost:8000',
-    '127.0.0.1:9000'
+    'front.localhost:8000',
+    'front.localhost:4567',
+    'front.pm0603.com',
 )
 
 # Database
