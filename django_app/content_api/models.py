@@ -1,5 +1,10 @@
 from django.db import models
 
+from config import settings
+
+# 컨텐트 모델
+from member.models import MyUser
+
 
 class Content(models.Model):
     seq = models.CharField(max_length=20, unique=True)
@@ -19,20 +24,18 @@ class Content(models.Model):
     place_url = models.TextField(null=True)
     place_addr = models.TextField(null=True)
     place_seq = models.TextField(null=True)
-
-
     # Comment는 추후에 구현 (최영민)
-    # comment = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    comment = models.ManyToManyField(
+        MyUser,
+        through='PostComment',
+        through_fields=('post', 'author'),
+    )
 
-# class PostComment(models.Model):
-#     post = models.ForeignKey(Content)
-#     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-#     content = models.TextField()
-#     created_date = models.DateTimeField(auto_now_add=True)
-#
-#     def __str__(self):
-#         return '{} comment (author:{}) \n {}'.format(
-#             self.post_id,
-#             self.author_id,
-#             self.content
-#         )
+# 리뷰 모델
+
+class PostComment(models.Model):
+    post = models.ForeignKey(Content)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    body = models.TextField()
+    score = models.CharField(max_length=1, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
