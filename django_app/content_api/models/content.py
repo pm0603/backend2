@@ -30,7 +30,7 @@ class Content(models.Model):
     place_seq = models.TextField(null=True)
 
     # 중간자 모델인 Bookmark를 이용해 User와 연결 - 최영민
-    bookmarks = models.ManyToManyField(User, through=Bookmark)
+    bookmarks = models.ManyToManyField(User, through=Bookmark, null=True)
 
     # Comment는 추후에 구현 (최영민)
     # comment = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
