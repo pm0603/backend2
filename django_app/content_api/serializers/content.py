@@ -1,6 +1,12 @@
 from rest_framework import serializers
 
-from .models import Content, PostComment
+from content_api.models import Content
+from content_api.models.content import PostComment
+
+__all__ = (
+    'ContentDetailSerializer',
+    'ContentSimpleSerializer',
+)
 
 
 class ContentDetailSerializer(serializers.ModelSerializer):
@@ -21,4 +27,3 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostComment
         fields = '__all__'
-        # fields = ('author', 'content', 'created_date')

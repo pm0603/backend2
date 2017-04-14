@@ -1,17 +1,23 @@
-from rest_framework import filters, viewsets
+from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
 
-from .models import Content, PostComment
-from .serializers import ContentDetailSerializer, ContentSimpleSerializer, ReviewSerializer
+from content_api.models.content import PostComment
+from content_api.serializers.content import ReviewSerializer
+from content_api.utils import DefaultResultsSetPagination
+from .models import Content
+from .serializers import ContentDetailSerializer, ContentSimpleSerializer
+
+
 
 
 # Pagination 개별 설정을 위한 클래스
 class DefaultResultsSetPagination(PageNumberPagination):
     page_size = 6
 
-
 class CommentPagination(PageNumberPagination):
     page_size = 10
+
 
 
 # Content DB 정보 API

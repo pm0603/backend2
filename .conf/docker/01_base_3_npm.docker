@@ -1,4 +1,2 @@
 WORKDIR     /srv
-RUN         git clone https://github.com/pm0603/frontend-vue.git front
-WORKDIR     /srv/front
-RUN         npm install
+RUN         git clone https://github.com/pm0603/frontend-vue.git frontend

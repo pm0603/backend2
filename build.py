@@ -100,14 +100,14 @@ input_dict_value(
     msg='Django default superuser email',
     dic=config_secret_common['django']['default_superuser'],
     key='email',
-    default='',
+    default='superuser@pm0603.com',
 )
 dict_key_make(config_secret_local, 'django')
 input_dict_value(
     msg='Django allowed hosts (default: ["*"])',
     dic=config_secret_local['django'],
     key='allowed_hosts',
-    default=['*', ],
+    default=['*'],
 )
 
 # Secret config - db
@@ -204,6 +204,7 @@ elif args.mode == MODE_PRODUCTION:
     format_dict['base_apt'] = ''
     format_dict['base_pip'] = ''
     format_dict['base_npm'] = ''
+    format_dict['common'] = dockerfile_common
     format_dict['extra'] = dockerfile_extra_production
 else:
     dockerfile_name = config['dockerfileDockerHubName']
@@ -243,9 +244,9 @@ elif args.mode == MODE_BASE_NPM:
 elif args.mode == MODE_DEBUG:
     build_format_dict['name'] = config['imageNameDebug']
 elif args.mode == MODE_PRODUCTION:
-    build_format_dict['name'] = config['imageNameDockerHub']
-elif args.mode == MODE_DOCKERHUB:
     build_format_dict['name'] = config['imageNameProduction']
+elif args.mode == MODE_DOCKERHUB:
+    build_format_dict['name'] = config['imageNameDockerHub']
 else:
     sys.exit('Build mode is not valid')
 build_command = build_command_template.format(**build_format_dict)
