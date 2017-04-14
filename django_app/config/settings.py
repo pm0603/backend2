@@ -92,6 +92,17 @@ INSTALLED_APPS = [
     'content_api',
 ]
 
+# REST 기본설정에 토큰 추가 - 최영민
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
+
 MIDDLEWARE = [
 
     'django.middleware.security.SecurityMiddleware',
@@ -162,7 +173,7 @@ if DB_RDS or DEBUG is False:
             'PORT': db_config['port'],
         }
     }
-# 로컬에서도 AWS RDS작동여부를 확인하고 에러 시 DEBUG를 확인하기 위해 주석처리 (최영민)
+# 로컬에서도 AWS RDS작동여부를 확인하고 에러 시 DEBUG를 확인하기 위해 주석처리 - 최영민
 
 else:
     DATABASES = {

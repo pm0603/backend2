@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from rest_framework.authtoken import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include("member.urls")),
-    url(r'^content', include('content_api.urls'))
+    url(r'^content', include('content_api.urls')),
+
+    # 유저의 username과 password 제공 시 토큰을 반환하는 url설정 - 최영민
+    url(r'^api-token-auth/', views.obtain_auth_token),
 ]
