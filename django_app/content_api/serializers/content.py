@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from content_api.models import Content
+from content_api.models.content import PostComment
 
 __all__ = (
     'ContentDetailSerializer',
@@ -21,3 +22,8 @@ class ContentSimpleSerializer(serializers.ModelSerializer):
         model = Content
         fields = ('seq', 'title', 'start_date', 'end_date', 'place', 'realm_name',
                   'area', 'price', 'thumbnail',)
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostComment
+        fields = '__all__'

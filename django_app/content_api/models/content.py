@@ -35,19 +35,18 @@ class Content(models.Model):
     def __str__(self):
         return self.title
 
-
     # Comment는 추후에 구현 (최영민)
-    # comment = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    comment = models.ManyToManyField(
+        User,
+        through='PostComment',
+        related_name='comment_relate',
+    )
 
-# class PostComment(models.Model):
-#     post = models.ForeignKey(Content)
-#     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-#     content = models.TextField()
-#     created_date = models.DateTimeField(auto_now_add=True)
-#
-#     def __str__(self):
-#         return '{} comment (author:{}) \n {}'.format(
-#             self.post_id,
-#             self.author_id,
-#             self.content
-#         )
+
+# 리뷰 모델
+class PostComment(models.Model):
+    post = models.ForeignKey(Content, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    score = models.CharField(max_length=1, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)

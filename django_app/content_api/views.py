@@ -1,12 +1,27 @@
-from rest_framework import filters, generics
+from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
 
+from content_api.models.content import PostComment
+from content_api.serializers.content import ReviewSerializer
 from content_api.utils import DefaultResultsSetPagination
 from .models import Content
 from .serializers import ContentDetailSerializer, ContentSimpleSerializer
 
 
+
+
+# Pagination 개별 설정을 위한 클래스
+class DefaultResultsSetPagination(PageNumberPagination):
+    page_size = 6
+
+class CommentPagination(PageNumberPagination):
+    page_size = 10
+
+
+
 # Content DB 정보 API
-class ContentViewSet(generics.ListAPIView):
+class ContentViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
 
@@ -29,3 +44,12 @@ class ContentViewSet(generics.ListAPIView):
             return ContentDetailSerializer
         else:
             return ContentSimpleSerializer
+
+
+class CommentViweSet(viewsets.ModelViewSet):
+    queryset = PostComment.objects.all()
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter,)
+    filter_fields = ('post',)
+    ordering = ('created_date',)
+    serializer_class = ReviewSerializer
+    pagination_class = CommentPagination

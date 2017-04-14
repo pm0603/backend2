@@ -172,6 +172,7 @@ else:
         }
     }
 
+
 AUTH_USER_MODEL = 'member.MyUser'
 AUTH_PASSWORD_VALIDATORS = [
     {
