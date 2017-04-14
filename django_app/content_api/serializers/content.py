@@ -1,6 +1,11 @@
 from rest_framework import serializers
 
-from .models import Content
+from content_api.models import Content
+
+__all__ = (
+    'ContentDetailSerializer',
+    'ContentSimpleSerializer',
+)
 
 
 class ContentDetailSerializer(serializers.ModelSerializer):
