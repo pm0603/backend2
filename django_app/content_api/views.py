@@ -1,13 +1,8 @@
 from rest_framework import filters, generics
-from rest_framework.pagination import PageNumberPagination
 
+from content_api.utils import DefaultResultsSetPagination
 from .models import Content
 from .serializers import ContentDetailSerializer, ContentSimpleSerializer
-
-
-# Pagination 개별 설정을 위한 클래스
-class DefaultResultsSetPagination(PageNumberPagination):
-    page_size = 6
 
 
 # Content DB 정보 API
