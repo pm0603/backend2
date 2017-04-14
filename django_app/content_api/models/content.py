@@ -1,9 +1,14 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+
+from content_api.models import Bookmark
 
 __all__ = (
     'Content',
 )
 
+# User모델 가져오기 - 최영민
+User = get_user_model()
 
 class Content(models.Model):
     seq = models.CharField(max_length=20, unique=True)
@@ -24,6 +29,8 @@ class Content(models.Model):
     place_addr = models.TextField(null=True)
     place_seq = models.TextField(null=True)
 
+    # 중간자 모델인 Bookmark를 이용해 User와 연결 - 최영민
+    bookmarks = models.ManyToManyField(User, through=Bookmark)
 
     # Comment는 추후에 구현 (최영민)
     # comment = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
