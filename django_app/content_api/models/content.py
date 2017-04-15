@@ -50,3 +50,6 @@ class PostComment(models.Model):
     body = models.TextField()
     score = models.CharField(max_length=1, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return '%s: %s \n 별점: %c, 작성일: %s' % (self.author_id, self.body, self.score, self.created_date)

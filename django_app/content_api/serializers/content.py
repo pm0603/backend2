@@ -10,11 +10,16 @@ __all__ = (
 
 
 class ContentDetailSerializer(serializers.ModelSerializer):
+    comment = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='username',
+     )
     class Meta:
         model = Content
         fields = ('seq', 'title', 'start_date', 'end_date', 'place', 'realm_name',
                   'area', 'price', 'content', 'ticket_url', 'phone', 'thumbnail',
-                  'place_url', 'place_addr', 'gps_x', 'gps_y')
+                  'place_url', 'place_addr', 'gps_x', 'gps_y', 'comment')
 
 
 class ContentSimpleSerializer(serializers.ModelSerializer):
@@ -22,6 +27,8 @@ class ContentSimpleSerializer(serializers.ModelSerializer):
         model = Content
         fields = ('seq', 'title', 'start_date', 'end_date', 'place', 'realm_name',
                   'area', 'price', 'thumbnail',)
+
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
