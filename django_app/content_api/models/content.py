@@ -46,7 +46,7 @@ class Content(models.Model):
 # 리뷰 모델
 class PostComment(models.Model):
     post = models.ForeignKey(Content, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     score = models.CharField(max_length=1, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
