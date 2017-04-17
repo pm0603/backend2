@@ -22,5 +22,8 @@ class Bookmark(models.Model):
     class Meta:
         unique_together = (('user', 'content'),)
 
+    # UserDetail에서 북마크 정보 확인 시 최신 순으로 보기 위해 설정 했으나 실패함 - 최영민
+        ordering = ('-created_date',)
+
     def __str__(self):
         return '{} bookmarked by user {}'.format(self.content, self.user)

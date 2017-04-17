@@ -26,9 +26,6 @@ class UserDetail(generics.RetrieveAPIView):
     # permission_classes = permissions.IsAuthenticated
     lookup_field = 'username'
 
-    # 한페이지당 6개의 아이템 표시 - 최영민
-    pagination_class = DefaultResultsSetPagination
-
 
 class Login(APIView):
     def post(self, request, *args, **kwargs):
