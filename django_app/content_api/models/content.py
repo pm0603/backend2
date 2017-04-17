@@ -36,20 +36,16 @@ class Content(models.Model):
         return self.title
 
     # Comment는 추후에 구현 (최영민)
-    comment = models.ManyToManyField(
+    comment_user = models.ManyToManyField(
         User,
-        through='PostComment',
+        through='ContentComment',
         related_name='comment_relate',
     )
 
 
 # 리뷰 모델
-class PostComment(models.Model):
-    post = models.ForeignKey(Content, on_delete=models.CASCADE)
+class ContentComment(models.Model):
+    content_d = models.ForeignKey(Content, on_delete=models.CASCADE)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
-    score = models.CharField(max_length=1, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
-
-    def __unicode__(self):
-        return '%s: %s \n 별점: %c, 작성일: %s' % (self.author_id, self.body, self.score, self.created_date)

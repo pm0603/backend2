@@ -26,6 +26,6 @@ urlpatterns = [
 
 # 테스트시 임시 로그인 경로
 urlpatterns += [
-    url(r'^api-auth/', include('rest_framework.urls',
+    url(r'^_auth/', include('rest_framework.urls',
                                namespace='rest_framework')),
 ]

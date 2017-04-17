@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
 
-from content_api.models.content import PostComment
+from content_api.models.content import ContentComment
 from content_api.permissions import IsOwnerOrReadOnly
 from content_api.serializers.content import CommentSerializer
 from content_api.utils import DefaultResultsSetPagination
@@ -49,9 +49,9 @@ class ContentViewSet(viewsets.ReadOnlyModelViewSet):
 from rest_framework import permissions
 
 class CommentViweSet(viewsets.ModelViewSet):
-    queryset = PostComment.objects.all()
+    queryset = ContentComment.objects.all()
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter,)
-    filter_fields = ('post',)
+    filter_fields = ('content_d',)
     ordering = ('created_date',)
     serializer_class = CommentSerializer
     pagination_class = CommentPagination
