@@ -10,12 +10,14 @@ __all__ = (
 User = get_user_model()
 
 
+# description은 추후 프론트팀이 가능하면 작업할 내용 - 최영민
+
 class Bookmark(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
 
-    # description은 추후 프론트팀이 가능하면 작업할 내용 - 최영민
+
     description = models.CharField(max_length=200, null=True)
 
     class Meta:

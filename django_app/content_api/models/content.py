@@ -28,9 +28,10 @@ class Content(models.Model):
     place_addr = models.TextField(null=True)
     place_seq = models.TextField(null=True)
 
-    # 중간자 모델인 Bookmark를 이용해 User와 연결 - 최영민
+
     bookmarks = models.ManyToManyField(User, through='Bookmark')
 
+    # 중간자 모델인 Bookmark를 이용해 User와 연결 - 최영민
     # DRF에서 구체적인 공연명을 알기 위한 설정 - 최영민
     def __str__(self):
         return self.title

@@ -3,7 +3,7 @@
 #MAINTAINER  archoiym@gmail.com
 
 # 필요한 파일 변경사항 및 패키지 설치(배포용)
-FROM        archoiym/new:latest
+FROM        archoiym/pm:latest
 MAINTAINER  archoiym@gmail.com
 
 # 중복되는 기본 설치 항목(base-1)
@@ -42,7 +42,7 @@ MAINTAINER  archoiym@gmail.com
 #RUN         ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 
 # 기본 실행 부분 (배포용)
-COPY        . /srv/app
+# COPY        . /srv/app
 WORKDIR     /srv
 RUN         git clone https://github.com/pm0603/frontend-vue.git frontend-new
 WORKDIR     /srv/app/django_app
