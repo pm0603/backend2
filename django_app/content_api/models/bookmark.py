@@ -20,6 +20,7 @@ class Bookmark(models.Model):
 
     class Meta:
         unique_together = (('user', 'content'),)
+        ordering = ['-created_date']
 
     def __str__(self):
         return '{} bookmarked by user {}'.format(self.content, self.user)
