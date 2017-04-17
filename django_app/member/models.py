@@ -5,6 +5,8 @@ from passlib.hash import pbkdf2_sha512
 
 from apis.mail import send_auth_mail
 from config import settings
+from content_api.models import Bookmark
+from content_api.models import Content
 
 
 class UserManager(BaseUserManager):
@@ -71,6 +73,9 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ("username",)
 
     objects = UserManager()
+
+    # 중간자 모델인 Bookmark를 이용해 User와 연결 - 최영민
+    bookmarks = models.ManyToManyField(Content, through=Bookmark)
 
     def __str__(self):
         return self.email

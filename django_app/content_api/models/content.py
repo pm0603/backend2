@@ -1,12 +1,8 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 
 __all__ = (
     'Content',
 )
-
-# User모델 가져오기 - 최영민
-User = get_user_model()
 
 
 class Content(models.Model):
@@ -28,16 +24,13 @@ class Content(models.Model):
     place_addr = models.TextField(null=True)
     place_seq = models.TextField(null=True)
 
-    # 중간자 모델인 Bookmark를 이용해 User와 연결 - 최영민
-    bookmarks = models.ManyToManyField(User, through='Bookmark')
-
     # DRF에서 구체적인 공연명을 알기 위한 설정 - 최영민
     def __str__(self):
         return self.title
 
 
-    # Comment는 추후에 구현 (최영민)
-    # comment = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+        # Comment는 추후에 구현 (최영민)
+        # comment = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 
 # class PostComment(models.Model):
 #     post = models.ForeignKey(Content)
