@@ -17,6 +17,8 @@ DEBUG = os.environ.get('MODE') == 'DEBUG'
 STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
 DB_RDS = os.environ.get('DB') == 'RDS' or DEBUG is False
 
+print("MODE: {} DB: {}".format(DEBUG, DB_RDS))
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
