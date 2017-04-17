@@ -24,8 +24,12 @@ class Login(APIView):
             )
 
             if user:
+                email = user.email
+                username = user.username
                 token = Token.objects.get_or_create(user=user)[0]
-                ret = {"token": token.key}
+                ret = {"token": token.key,
+                       'email': email,
+                       'username': username}
                 return Response(ret, status=status.HTTP_200_OK)
 
             else:
