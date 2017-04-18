@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^fblogin/$', views.FacebookLogin.as_view()),
     url(r'^activate/(?P<hash>.*)/$', views.UserActivate.as_view()),
     url(r'^password/change/$', views.PasswordChange.as_view()),
+    url(r'^detail/(?P<username>[a-zA-Z0-9_.-]+)/$', views.UserDetail.as_view())
 ]

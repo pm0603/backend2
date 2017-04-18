@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -7,7 +8,7 @@ __all__ = (
     'Bookmark',
 )
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 
 # description은 추후 프론트팀이 가능하면 작업할 내용 - 최영민
@@ -22,6 +23,9 @@ class Bookmark(models.Model):
 
     class Meta:
         unique_together = (('user', 'content'),)
+        ordering = ['-created_date']
+
+    # UserDetail에서 북마크 정보 확인 시 최신 순으로 보기 위해 설정 - 최영민
         ordering = ['-created_date']
 
     def __str__(self):
