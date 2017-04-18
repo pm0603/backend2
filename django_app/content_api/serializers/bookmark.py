@@ -18,13 +18,12 @@ class BookmarkedContentSerializer(serializers.ModelSerializer):
 
 
 class BookmarkSerializer(serializers.ModelSerializer):
-    # username = serializers.ModelField(model_field='user.username')
-    # content_title = serializers.Field(source='content.title')
 
-    # content = serializers.CharField
-    content = BookmarkedContentSerializer(many=True, read_only=True)
-    #bookmark = BookmarkedContentSerializer(many=True, read_only=True)
+    content = serializers.IntegerField(source='content.id')
+    title = serializers.CharField(source='content.title', required=False)
+    price = serializers.CharField(source='content.price', required=False)
+    start_date = serializers.DateField(source='content.start_date', required=False)
 
     class Meta:
         model = Bookmark
-        fields = ('content', 'user')
+        fields = ('content', 'title', 'price', 'start_date')

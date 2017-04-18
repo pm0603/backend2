@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
@@ -31,14 +32,15 @@ class BookmarkCreateView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated, )
 
     # user정보를 따로 받을 필요 없이 user가 로그인 되면 로그인된 user정보를 활용 - 최영민
-    # 또한 content도 title만 입력하면 됨 - 최영민
     def perform_create(self, serializer):
-        content_title = self.request.data['content']
-        content = Content.objects.get(title=content_title)
-        serializer.save(
-            user=self.request.user,
-            content=content,
-        )
+        content = Content.objects.get(id=self.request.data['content'])
+        if Bookmark.objects.filter(user=self.request.user, content=content):
+            raise ValueError
+        else:
+            serializer.save(
+                user=self.request.user,
+                content=content,
+            )
 
 
 class BookmarkDeleteView(APIView):
@@ -47,7 +49,7 @@ class BookmarkDeleteView(APIView):
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, format=None):
-        content = Content.objects.get(title=self.request.data['content'])
+        content = Content.objects.get(id=self.request.data['content'])
         instance = Bookmark.objects.filter(user=self.request.user, content=content)
         instance.delete()
         return Response('deleted {}\'s bookmark {}'.format(self.request.user, instance))
