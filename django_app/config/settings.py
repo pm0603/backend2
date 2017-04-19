@@ -94,9 +94,6 @@ INSTALLED_APPS = [
 
 # 프론트에서 파라미터를 'search' -> 'q'로 요청 처리 - 김도경
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-    ),
     'SEARCH_PARAM': 'q',
 }
 
