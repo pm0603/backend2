@@ -157,7 +157,6 @@ CORS_ORIGIN_WHITELIST = (
 #
 # DB관련 설정 - 최영민
 
-
 if DB_RDS or DEBUG is False:
     db_config = config['db_rds']
     DATABASES = {
