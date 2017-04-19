@@ -190,6 +190,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# 모든 authentication에서 토큰을 요구하도록 설정 - 최영민
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
