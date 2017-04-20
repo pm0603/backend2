@@ -94,6 +94,11 @@ INSTALLED_APPS = [
     'content_api',
 ]
 
+# 프론트에서 파라미터를 'search' -> 'q'로 요청 처리 - 김도경
+REST_FRAMEWORK = {
+    'SEARCH_PARAM': 'q',
+}
+
 MIDDLEWARE = [
 
     'django.middleware.security.SecurityMiddleware',
@@ -148,9 +153,8 @@ CORS_ORIGIN_WHITELIST = (
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+#
 # DB관련 설정 - 최영민
-
 
 if DB_RDS or DEBUG is False:
     db_config = config['db_rds']
