@@ -53,37 +53,42 @@ def xml_parser_db_save(request):
     response_body = urlopen(request).read()
     data = xmltodict.parse(response_body)
 
-    item_path = data['response']['msgBody']['perforList']
+    try:
 
-    for index, item in enumerate(item_path):
-        item_path_index = item_path[index]
-        seq = item_path_index['seq']
-        title = item_path_index['title']
-        place = item_path_index['place']
-        start_date = item_path_index['startDate']
-        start_date_parse = dateutil.parser.parse(start_date).date()
-        end_date = item_path_index['endDate']
-        end_date_parse = dateutil.parser.parse(end_date).date()
-        realm_name = item_path_index['realmName']
-        area = item_path_index['area']
-        thumbnail = item_path_index['thumbnail']
-        gps_x = item_path_index['gpsX']
-        gps_y = item_path_index['gpsY']
+        item_path = data['response']['msgBody']['perforList']
 
-        Content.objects.get_or_create(
-            seq=seq,
-            title=title,
-            place=place,
-            start_date=start_date_parse,
-            end_date=end_date_parse,
-            realm_name=realm_name,
-            area=area,
-            thumbnail=thumbnail,
-            gps_x=gps_x,
-            gps_y=gps_y,
-        )
-        detail_get(seq)
-    return data
+        for index, item in enumerate(item_path):
+            item_path_index = item_path[index]
+            seq = item_path_index['seq']
+            title = item_path_index['title']
+            place = item_path_index['place']
+            start_date = item_path_index['startDate']
+            start_date_parse = dateutil.parser.parse(start_date).date()
+            end_date = item_path_index['endDate']
+            end_date_parse = dateutil.parser.parse(end_date).date()
+            realm_name = item_path_index['realmName']
+            area = item_path_index['area']
+            thumbnail = item_path_index['thumbnail']
+            gps_x = item_path_index['gpsX']
+            gps_y = item_path_index['gpsY']
+
+            Content.objects.get_or_create(
+                seq=seq,
+                title=title,
+                place=place,
+                start_date=start_date_parse,
+                end_date=end_date_parse,
+                realm_name=realm_name,
+                area=area,
+                thumbnail=thumbnail,
+                gps_x=gps_x,
+                gps_y=gps_y,
+            )
+            detail_get(seq)
+        return data
+    except KeyError:
+        error_message = "유효하지 않은 파라미터 혹은 파라미터 값입니다"
+        return error_message
 
 
 # 지역을 검색시 동작
