@@ -1,0 +1,11 @@
+COPY        .conf/supervisord-debug.conf /etc/supervisor/supervisord.conf
+COPY        .conf/supervisor-app-debug.conf /etc/supervisor/conf.d/supervisor-app.conf
+COPY        .conf/uwsgi-app-debug.ini /etc/uwsgi/sites/api-ios.ini
+
+WORKDIR     /srv/app/django_app
+
+RUN         MODE=DEBUG DB=LOCAL python3 manage.py migrate --noinput
+RUN         MODE=DEBUG DB=LOCAL python3 manage.py createsu
+RUN         MODE=DEBUG DB=LOCAL python3 manage.py collectstatic --noinput
+EXPOSE      4567
+CMD ["supervisord", "-n"]
