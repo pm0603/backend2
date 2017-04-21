@@ -25,9 +25,3 @@ urlpatterns = [
     url(r'bookmark/create', BookmarkCreateView.as_view()),
     url(r'bookmark/delete', BookmarkDeleteView.as_view()),
 ]
-
-# 테스트시 임시 로그인 경로
-urlpatterns += [
-    url(r'^_auth/', include('rest_framework.urls',
-                               namespace='rest_framework')),
-]
