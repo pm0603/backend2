@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import APIException
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -24,7 +25,7 @@ class Login(APIView):
             )
 
             if user:
-                token = Token.objects.get_or_create(user=user)[0]
+                token, _ = Token.objects.get_or_create(user=user)
                 ret = {"token": token.key}
                 return Response(ret, status=status.HTTP_200_OK)
 
@@ -36,10 +37,11 @@ class Logout(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
+
         try:
-            request.user.auth_token.delete()
-        except:
-            pass
+            request.auth.delete()
+        except Exception as e:
+            raise APIException(e.args)
         logout(request)
         return Response({"success": "Successfully logged out."},
                         status=status.HTTP_200_OK)

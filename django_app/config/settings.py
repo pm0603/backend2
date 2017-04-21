@@ -95,6 +95,11 @@ INSTALLED_APPS = [
 # 프론트에서 파라미터를 'search' -> 'q'로 요청 처리 - 김도경
 REST_FRAMEWORK = {
     'SEARCH_PARAM': 'q',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
 }
 
 MIDDLEWARE = [
@@ -154,27 +159,27 @@ CORS_ORIGIN_WHITELIST = (
 #
 # DB관련 설정 - 최영민
 
-if DB_RDS or DEBUG is False:
-    db_config = config['db_rds']
-    DATABASES = {
-        'default': {
-            'ENGINE': db_config['engine'],
-            'NAME': db_config['name'],
-            'USER': db_config['user'],
-            'PASSWORD': db_config['password'],
-            'HOST': db_config['host'],
-            'PORT': db_config['port'],
-        }
+# if DB_RDS or DEBUG is False:
+#     db_config = config['db_rds']
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': db_config['engine'],
+#             'NAME': db_config['name'],
+#             'USER': db_config['user'],
+#             'PASSWORD': db_config['password'],
+#             'HOST': db_config['host'],
+#             'PORT': db_config['port'],
+#         }
+#     }
+# # 로컬에서도 AWS RDS작동여부를 확인하고 에러 시 DEBUG를 확인하기 위해 주석처리 (최영민)
+#
+# else:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-# 로컬에서도 AWS RDS작동여부를 확인하고 에러 시 DEBUG를 확인하기 위해 주석처리 (최영민)
-
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
+}
 
 AUTH_USER_MODEL = 'member.MyUser'
 AUTH_PASSWORD_VALIDATORS = [
