@@ -1,7 +1,9 @@
 import requests
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
+from rest_framework import generics
+from rest_framework import permissions
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import APIException
@@ -10,9 +12,20 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from config import settings
+from content_api.utils import DefaultResultsSetPagination
 from member.forms import UserForm, UserSignupForm
 from member.models import MyUser, UserHash
-from member.serializers import PasswordChangeSerializer
+from member.serializers import PasswordChangeSerializer, UserSerializer
+
+
+User = get_user_model()
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    # permission_classes = permissions.IsAuthenticated
+    lookup_field = 'username'
 
 
 class Login(APIView):
@@ -28,7 +41,6 @@ class Login(APIView):
                 token, _ = Token.objects.get_or_create(user=user)
                 ret = {"token": token.key}
                 return Response(ret, status=status.HTTP_200_OK)
-
             else:
                 return Response({"error": "이메일 혹은 비밀번호가 올바르지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
 

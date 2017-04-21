@@ -13,7 +13,7 @@ def send_activation_mail(user_email, hashed_email):
     send_mail(
         "pm0603 Signup mail",
         """
-        ♚♚p☆m☆0☆6☆0☆3♚♚가입시$$전원 카드팩☜☜뒷면100%증정※ ♜공연☆전시정보♜ 무료증정￥ 특정조건 §§북마크3§§★예약서비스★획득기회@@@ 즉시이동
+        pm0603에 가입해주셔서 감사합니다. 링크를 누르시면 회원가입이 완료됩니다.
         {activate_url}
         """.format(activate_url=activate_url),
         settings.DEFAULT_FROM_EMAIL,

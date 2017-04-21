@@ -1,15 +1,14 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
 from config import settings
 
 __all__ = (
-    'Content',
+    'Content', 'ContentComment'
 )
 
-# User모델 가져오기 - 최영민
-User = get_user_model()
-
+User = settings.AUTH_USER_MODEL
 
 class Content(models.Model):
     seq = models.CharField(max_length=20, unique=True)
@@ -49,3 +48,4 @@ class ContentComment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     body = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
+

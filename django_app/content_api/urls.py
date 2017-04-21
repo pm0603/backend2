@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from rest_framework.routers import DefaultRouter
 
 from content_api import views
-from content_api.bookmark_views import BookmarkListView, BookmarkCreateView, BookmarkDeleteView
+from content_api.bookmark_views import BookmarkCreateView, BookmarkDeleteView, BookmarkListView
 from . import open_api
 
 # 뷰셋 라우터 설정 - 김도경
@@ -18,8 +18,10 @@ urlpatterns = [
     # 라우터 루트 - 김도경
     url(r'^', include(router.urls)),
 
-    # Bookmark 관련 url 설정 - 최영민
+    # 아래 url은 user쪽으로 옮김 - 최영민
     url(r'bookmark/list', BookmarkListView.as_view()),
+
+    # Bookmark 관련 url 설정 - 최영민
     url(r'bookmark/create', BookmarkCreateView.as_view()),
     url(r'bookmark/delete', BookmarkDeleteView.as_view()),
 ]
