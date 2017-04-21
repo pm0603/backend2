@@ -1,9 +1,10 @@
-from rest_framework import filters
+from rest_framework import filters, permissions
 from rest_framework import viewsets
+from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.settings import api_settings
 
 from content_api.models.content import ContentComment
-from content_api.permissions import IsOwnerOrReadOnly
 from content_api.serializers.content import CommentSerializer
 from content_api.utils import DefaultResultsSetPagination
 from .models import Content
@@ -19,10 +20,15 @@ class CommentPagination(PageNumberPagination):
     page_size = 10
 
 
+# class CustomFilter(SearchFilter):
+#     parameter_name = 'q'
+
 # Content DB 정보 API
-class ContentViewSet(viewsets.ReadOnlyModelViewSet):
+class ContentViewSet(viewsets.ReadOnlyModelViewSet, SearchFilter):
     queryset = Content.objects.all()
+
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    search_param = api_settings.SEARCH_PARAM
 
     # 필터링 조건 (카테고리)
     filter_fields = ('seq', 'area', 'realm_name')
@@ -44,15 +50,16 @@ class ContentViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             return ContentSimpleSerializer
 
-
-from rest_framework import permissions
-
+# 커맨트 뷰
 
 class CommentViweSet(viewsets.ModelViewSet):
     queryset = ContentComment.objects.all()
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter,)
-    filter_fields = ('content_d',)
+    filter_fields = ('content', 'id',)
     ordering = ('created_date',)
     serializer_class = CommentSerializer
     pagination_class = CommentPagination
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
