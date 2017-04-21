@@ -216,7 +216,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 
-# Facebook
+# Facebook - 김찬규
 FB_APP_ID = config['facebook']['app_id']
 FB_SECRET_CODE = config['facebook']['secret_code']
 FB_APP_ACCESS_TOKEN = FB_APP_ID + '|' + FB_SECRET_CODE
@@ -226,7 +226,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email'
 }
 
-# Email
+# Email - 김찬규
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
