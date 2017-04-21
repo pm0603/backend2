@@ -17,16 +17,8 @@ class ContentSimpleSerializer(serializers.ModelSerializer):
                   'area', 'price', 'thumbnail')
 
 
-# 상세페이지에서 추가 정보 불러오기 위한 필드(작업중)
-class CommentListField(serializers.RelatedField):
-    def to_representation(self, value):
-        print(value)
-        return 'review %s' % (value.username,)
-
-
 # 상세 페이지 출력시 상세정보까지 나오는 시리얼라이저
 class ContentDetailSerializer(serializers.ModelSerializer):
-    comment_user = CommentListField(many=True, read_only=True)
 
     class Meta:
         model = Content
@@ -36,4 +28,13 @@ class ContentDetailSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContentComment
-        fields = '__all__'
+        fields = (
+            'content',
+            'user',
+            'body',
+            'created_date',
+            'id',
+        )
+        read_only_fields = (
+            'user',
+        )

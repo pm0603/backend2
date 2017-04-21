@@ -69,8 +69,6 @@ def xml_parser_db_save(request):
             realm_name = item_path_index['realmName']
             area = item_path_index['area']
             thumbnail = item_path_index['thumbnail']
-            gps_x = item_path_index['gpsX']
-            gps_y = item_path_index['gpsY']
 
             Content.objects.get_or_create(
                 seq=seq,
@@ -81,8 +79,6 @@ def xml_parser_db_save(request):
                 realm_name=realm_name,
                 area=area,
                 thumbnail=thumbnail,
-                gps_x=gps_x,
-                gps_y=gps_y,
             )
             detail_get(seq)
         return data

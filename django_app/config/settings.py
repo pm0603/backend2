@@ -98,10 +98,12 @@ REST_FRAMEWORK = {
     # 프론트에서 파라미터를 'search' -> 'q'로 요청 처리 - 김도경
     'SEARCH_PARAM': 'q',
 
-    # 모든 authentication에서 토큰을 요구하도록 설정 - 최영민
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+
 }
 
 MIDDLEWARE = [

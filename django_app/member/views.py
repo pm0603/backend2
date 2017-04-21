@@ -6,6 +6,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import APIException
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -37,14 +38,9 @@ class Login(APIView):
             )
 
             if user:
-                email = user.email
-                username = user.username
-                token = Token.objects.get_or_create(user=user)[0]
-                ret = {"token": token.key,
-                       'email': email,
-                       'username': username}
+                token, _ = Token.objects.get_or_create(user=user)
+                ret = {"token": token.key}
                 return Response(ret, status=status.HTTP_200_OK)
-
             else:
                 return Response({"error": "이메일 혹은 비밀번호가 올바르지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,10 +49,11 @@ class Logout(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
+
         try:
-            request.user.auth_token.delete()
-        except:
-            pass
+            request.auth.delete()
+        except Exception as e:
+            raise APIException(e.args)
         logout(request)
         return Response({"success": "Successfully logged out."},
                         status=status.HTTP_200_OK)
