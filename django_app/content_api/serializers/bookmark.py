@@ -30,4 +30,4 @@ class BookmarkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bookmark
-        fields = ('content', 'title', 'price', 'area', 'place', 'start_date', 'end_date')
+        fields = ('content', 'title', 'price', 'area', 'place', 'start_date', 'end_date', 'seq')
