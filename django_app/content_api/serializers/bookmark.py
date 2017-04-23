@@ -20,6 +20,7 @@ class BookmarkedContentSerializer(serializers.ModelSerializer):
 class BookmarkSerializer(serializers.ModelSerializer):
 
     content = serializers.IntegerField(source='content.id')
+    seq = serializers.CharField(source='content.seq', required=False)
     title = serializers.CharField(source='content.title', required=False)
     price = serializers.CharField(source='content.price', required=False)
     start_date = serializers.DateField(source='content.start_date', required=False)

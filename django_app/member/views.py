@@ -38,8 +38,13 @@ class Login(APIView):
             )
 
             if user:
+                email = user.email
+                username = user.username
                 token, _ = Token.objects.get_or_create(user=user)
-                ret = {"token": token.key}
+                ret = {"token": token.key,
+                       "email": email,
+                       "username": username,
+                       }
                 return Response(ret, status=status.HTTP_200_OK)
             else:
                 return Response({"error": "이메일 혹은 비밀번호가 올바르지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
