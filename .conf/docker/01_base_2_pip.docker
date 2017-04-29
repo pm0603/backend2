@@ -1,0 +1,8 @@
+COPY        requirements.txt /srv
+WORKDIR     /srv
+RUN         pip3 install -r requirements.txt
+
+
+# boto 및 celery 설치 제외
+#RUN         pip3 install git+https://github.com/michaelhenry/boto.git@sqs_fixed && \
+#            pip3 install git+https://github.com/celery/celery.git@b27c0f143b86989a5f655bcc9592221bbbba0f5f && \
